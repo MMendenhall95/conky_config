@@ -1,0 +1,195 @@
+# background no
+background yes
+
+# Use Xft?
+use_xft yes
+
+# Xft font when Xft is enabled
+xftfont Bitstream Vera Sans FreeSans:size=8
+
+# Text alpha when using Xft
+#xftalpha 0.8
+xftalpha 1
+
+# Update interval (seconds)
+update_interval 1.0
+
+# Create own window instead of using desktop
+own_window yes
+
+# If own_window is yes, you may use type normal, desktop or override
+#own_window_type override
+own_window_type normal
+
+# Use pseudo transparency with own_window?
+own_window_transparent yes
+
+# If own_window is yes, these window manager hints may be used
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager 			
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+
+# Use double buffering (reduces flicker, may not work for everyone)
+double_buffer yes
+
+# Minimum size of text area
+minimum_size 280 5
+
+# Draw borders around text
+draw_borders no
+
+# Draw borders around graphs
+draw_graph_borders yes
+
+# Stippled borders?
+stippled_borders 5
+
+# border margins
+#border_inner_margin 4
+
+# border width
+border_width 1
+
+# Default colors
+draw_shades yes
+default_shade_color 000000 #  0   0   0 Black
+
+draw_outline no
+default_outline_color 000000 #  0   0   0 Black
+
+default_color FFFFE0 #255 255 224 LightYellow
+color0 66CDAA #102 205 170 MediumAquamarine
+color1 D3D3D3 #211 211 211 LightGrey
+color2 FFDEAD #255 222 173 NavajoWhite
+color3 808080 #128 128 128 Grey
+color4 FAEBD7 #250 235 215 AntiqueWhite
+color5 FF0000 #255   0   0	Red
+color6 556B2F # 85 107  47 DarkOliveGreen
+
+# Text alignment, other possible values are commented
+#alignment top_left
+alignment top_right
+#alignment bottom_left
+#alignment bottom_right
+#alignment none
+
+# Gap between borders of screen and text
+# same thing as passing -x at command line
+gap_x 6
+gap_y 4
+
+# Subtract file system buffers from used memory?
+no_buffers yes
+
+# set to yes if you want all text to be in uppercase
+uppercase no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+
+# number of net samples to average
+# set to 1 to disable averaging
+net_avg_samples 2
+
+# Force UTF8? note that UTF8 support required XFT
+#override_utf8_locale no
+override_utf8_locale yes
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+use_spacer none
+
+# Allow each port monitor to track at most this many connections (if 0 or not set, default is 256)
+#max_port_monitor_connections 256
+
+# Maximum number of special things, e.g. fonts, offsets, aligns, etc.
+#max_specials 512
+
+# Maximum size of buffer for user text, i.e. below TEXT line.
+#max_user_text 16384
+
+# variable is given either in format $variable or in ${variable}. Latter
+# allows characters right after the variable and must be used in network
+# stuff because of an argument
+
+
+# change GiB to G and MiB to M
+short_units yes
+
+##############################TEXT##############################
+##############################TEXT##############################
+##############################TEXT##############################
+
+TEXT
+#SYSTEM =============================================
+${nodename} - ${sysname} ${color5} ${kernel} ${color4} on ${color5} ${machine}
+${color1}Uptime:${color} ${uptime} ${color1}- Load:${color} ${loadavg}
+${color1}Desktop: ${color2}${desktop}
+#STATS ==============================================
+${color1}BAT1 Time:${color4} ${battery_time BAT1}
+${color1}BAT1 Wh:${color4} ${execi 30 upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep energy: | gawk '{ printf $2 }'} / ${execi 3600 upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep energy-full: | gawk '{ printf $2 }'}
+${color1}Bat1:${color4} ${battery_short BAT1} ${battery_bar BAT1}
+${color1}BAT0 Time:${color4} ${battery_time BAT0}
+${color1}BAT0 Wh:${color4}  ${execi 30  upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep energy: | gawk '{ printf $2 }'} / ${execi 3600 upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep energy-full: | gawk '{ printf $2 }'}
+${color1}BAT0:${color4} ${battery_short BAT0} ${battery_bar BAT0}
+${color1}CPU Temp:${color4} ${acpitemp}°C
+${color1}Fan Speed: ${color4}${ibm_fan} RPM
+#####################################################################
+${color1}/dev/sda Temp: ${color4}${execi 60 hddtemp -n /dev/sda}°C
+#####################################################################
+#Old code from previous setup (may be used again one day, who knows?)
+#${color1}GPU LOAD: ${color2}${execi 1 aticonfig --adapter=0 --od-getclocks | tail -n1 | gawk '{ printf $4 }'}
+#${color1}GPU LOAD: ${color2}${texeci 1 radeontop -t 50 -d- -l 1 | tail -n1 | gawk '{ printf $3 }' | sed 's/.$//'}
+#####################################################################
+${color1}CPU0: ${color4}${freq_g 0}GHz ${cpu cpu0}% ${cpubar cpu0}
+${cpugraph 0 25,355 000000 ffffff -t}
+${color1}CPU1: ${color4}${freq_g 1}GHz ${cpu cpu1}% ${cpubar cpu1}
+${cpugraph 1 25,355 000000 ffffff -t}
+${color1}CPU2: ${color4}${freq_g 2}GHz ${cpu cpu2}% ${cpubar cpu2}
+${cpugraph 2 25,355 000000 ffffff -t}
+${color1}CPU3: ${color4}${freq_g 3}GHz ${cpu cpu3}% ${cpubar cpu3}
+${cpugraph 3 25,355 000000 ffffff -t}
+${color1}RAM:${color4} ${mem} / ${memmax} - ${memperc}% ${membar}
+${color1}SWAP:${color4} ${swap} / ${swapmax} - ${swapperc}% ${swapbar}
+${color1}BUFFER:${color4}${buffers} ${color1}CACHED: ${color4}${cached}
+${color1}RAM Graph:${color4} ${memgraph 10}
+####################################################################
+# Another chunk of old code from a previous setup
+#${color1}VRAM Usage:${color4} ${texeci 5 radeontop -t 50 -d- -l 1 }
+####################################################################
+${color1}ENTROPY:${color4} ${entropy_avail} / ${entropy_poolsize} - ${entropy_perc}% ${entropy_bar} 
+${color1}Filesystem:
+${color1}/dev/sda ${color4}${fs_used /}/${fs_size /} ${fs_bar /}
+${color1}READ:${color4}  ${diskio_read}   
+${diskiograph_read /dev/sda 10}
+${color1}WRITE:${color4} ${diskio_write} 
+${diskiograph_write /dev/sda 10}
+######################One day this will be formatted to look better###########
+${color1}Processes:${color4} ${processes}  ${color1}Running:${color4} ${running_processes}
+${color1}CPU Usage      	PID	CPU%   MEM%
+${color5} ${top name 1}  	${top pid 1}     ${top cpu 1}    ${top mem 1}
+${color1} ${top name 2}  	${top pid 2}	 ${top cpu 2}	 ${top mem 2}
+${color1} ${top name 3}	${top pid 3}	${top cpu 3}	${top mem 3}
+${color1}RAM Usage
+${color5} ${top_mem name 1}	${top_mem pid 1}	${top_mem cpu 1}	${top_mem mem 1}
+${color1} ${top_mem name 2}	${top_mem pid 2}	${top_mem cpu 2}	${top_mem mem 2}
+${color1} ${top_mem name 3}	${top_mem pid 3}	${top_mem cpu 3}	${top_mem mem 3}
+##############################################################################
+${color1}ESSID:${color4} ${wireless_essid wlp4s0}
+${color1}AP MAC:${color4} ${wireless_ap wlp4s0}
+#${color1}wlp3s0 MAC:${color4} ${execi 100 ifconfig | tail -n6 | grep ether | gawk '{ printf $2 }'
+${color1}AP BITRATE:${color4} ${wireless_bitrate wlp4s0}
+${color1}inet:${color4} ${addr wlp4s0}
+${color1}extIP:${color4} ${texeci 3600 curl ipinfo.io/ip}
+${color1}Signal Strength: ${color4}${wireless_link_qual_perc wlp4s0} %
+${color4}${wireless_link_bar wlp4s0}
+###################################old code for download graphs through eth0##########################
+# Down:${color0} ${downspeed enp3s0f2} ${color1}${goto 215}Up:${color0} ${upspeed enp3s0f2}
+#${color6}${downspeedgraph enp3s0f2 32,175 darkolivegreen4} ${color coral3}${upspeedgraph enp3s0f2 32,175 blueviolet}
+######################################################################################################
+${color1}Total: ${color4}${totaldown wlp4s0} ${color1}Down:${color4} ${downspeed wlp4s0}B/s ${color1}${goto 210}${color1}Total: ${color4}${totalup wlp4s0} ${color1}Up:${color4}${upspeed wlp4s0}B/s
+${color5}${downspeedgraph wlp4s0 32,175} ${color5}${upspeedgraph wlp4s0 32,175}
+${color5}ETH:
+${color4}${execi 600 python ~/Scripts/ETHminer.py}
+${color5}SIA:
+${color4}${execi 600 python ~/Scripts/SIAmine.py}
+${color5}${execi 600 packy -w 50}
