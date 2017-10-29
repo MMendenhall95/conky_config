@@ -64,7 +64,8 @@ color3 808080 #128 128 128 Grey
 color4 FAEBD7 #250 235 215 AntiqueWhite
 color5 FF0000 #255   0   0	Red
 color6 556B2F # 85 107  47 DarkOliveGreen
-
+color7 000000			  # Black
+color8 FFFF00			  # Yellow
 # Text alignment, other possible values are commented
 #alignment top_left
 alignment top_right
@@ -121,75 +122,71 @@ short_units yes
 
 TEXT
 #SYSTEM =============================================
-${nodename} - ${sysname} ${color5} ${kernel} ${color4} on ${color5} ${machine}
-${color1}Uptime:${color} ${uptime} ${color1}- Load:${color} ${loadavg}
-${color1}Desktop: ${color2}${desktop}
+${color2}${nodename} - ${sysname} ${color5} ${kernel} ${color7} on ${color5} ${machine}
+${color2}Uptime:${color7} ${uptime} ${color2}- Load:${color7} ${loadavg}
+${color2}Desktop: ${color2}${desktop}
 #STATS ==============================================
-${color1}BAT1 Time:${color4} ${battery_time BAT1}
-${color1}BAT1 Wh:${color4} ${execi 30 upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep energy: | gawk '{ printf $2 }'} / ${execi 3600 upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep energy-full: | gawk '{ printf $2 }'}
-${color1}Bat1:${color4} ${battery_short BAT1} ${battery_bar BAT1}
-${color1}BAT0 Time:${color4} ${battery_time BAT0}
-${color1}BAT0 Wh:${color4}  ${execi 30  upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep energy: | gawk '{ printf $2 }'} / ${execi 3600 upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep energy-full: | gawk '{ printf $2 }'}
-${color1}BAT0:${color4} ${battery_short BAT0} ${battery_bar BAT0}
-${color1}CPU Temp:${color4} ${acpitemp}°C
-${color1}Fan Speed: ${color4}${ibm_fan} RPM
-#####################################################################
-${color1}/dev/sda Temp: ${color4}${execi 60 hddtemp -n /dev/sda}°C
+${color2}BAT1 Time:${color7} ${battery_time BAT1}
+${color2}BAT1 Wh:${color7} ${execi 30 upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep energy: | gawk '{ printf $2 }'} / ${execi 3600 upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep energy-full: | gawk '{ printf $2 }'}
+${color2}Bat1:${color7} ${battery_short BAT1} ${battery_bar BAT1}
+${color2}BAT0 Time:${color7} ${battery_time BAT0}
+${color2}BAT0 Wh:${color7}  ${execi 30  upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep energy: | gawk '{ printf $2 }'} / ${execi 3600 upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep energy-full: | gawk '{ printf $2 }'}
+${color2}BAT0:${color7} ${battery_short BAT0} ${battery_bar BAT0}
+${color2}CPU Temp:${if_match ${acpitemp} > 60}${color5}${else}${color7}${endif}${acpitemp}°C
+${color2}Fan Speed: ${color7}${ibm_fan} RPM
+${color2}/dev/sda Temp: ${if_match ${execi 60 hddtemp -n /dev/sda} > 44}${color5}${else}${color7}${endif}${execi 60 hddtemp -n /dev/sda}°C
 #####################################################################
 #Old code from previous setup (may be used again one day, who knows?)
 #${color1}GPU LOAD: ${color2}${execi 1 aticonfig --adapter=0 --od-getclocks | tail -n1 | gawk '{ printf $4 }'}
 #${color1}GPU LOAD: ${color2}${texeci 1 radeontop -t 50 -d- -l 1 | tail -n1 | gawk '{ printf $3 }' | sed 's/.$//'}
 #####################################################################
-${color1}CPU0: ${color4}${freq_g 0}GHz ${cpu cpu0}% ${cpubar cpu0}
+${color2}CPU0: ${color7}${freq_g 0}GHz ${cpu cpu0}% ${cpubar cpu0}
 ${cpugraph 0 25,355 000000 ffffff -t}
-${color1}CPU1: ${color4}${freq_g 1}GHz ${cpu cpu1}% ${cpubar cpu1}
+${color2}CPU1: ${color7}${freq_g 1}GHz ${cpu cpu1}% ${cpubar cpu1}
 ${cpugraph 1 25,355 000000 ffffff -t}
-${color1}CPU2: ${color4}${freq_g 2}GHz ${cpu cpu2}% ${cpubar cpu2}
+${color2}CPU2: ${color7}${freq_g 2}GHz ${cpu cpu2}% ${cpubar cpu2}
 ${cpugraph 2 25,355 000000 ffffff -t}
-${color1}CPU3: ${color4}${freq_g 3}GHz ${cpu cpu3}% ${cpubar cpu3}
+${color2}CPU3: ${color7}${freq_g 3}GHz ${cpu cpu3}% ${cpubar cpu3}
 ${cpugraph 3 25,355 000000 ffffff -t}
-${color1}RAM:${color4} ${mem} / ${memmax} - ${memperc}% ${membar}
-${color1}SWAP:${color4} ${swap} / ${swapmax} - ${swapperc}% ${swapbar}
-${color1}BUFFER:${color4}${buffers} ${color1}CACHED: ${color4}${cached}
-${color1}RAM Graph:${color4} ${memgraph 10}
+${color2}RAM:${color7} ${mem} / ${memmax} - ${memperc}% ${membar}
+${color2}SWAP:${color7} ${swap} / ${swapmax} - ${swapperc}% ${swapbar}
+${color2}BUFFER:${color7}${buffers} ${color2}CACHED: ${color7}${cached}
+${color2}RAM Graph:${color7} ${memgraph 10}
 ####################################################################
 # Another chunk of old code from a previous setup
 #${color1}VRAM Usage:${color4} ${texeci 5 radeontop -t 50 -d- -l 1 }
 ####################################################################
-${color1}ENTROPY:${color4} ${entropy_avail} / ${entropy_poolsize} - ${entropy_perc}% ${entropy_bar} 
-${color1}Filesystem:
-${color1}/dev/sda ${color4}${fs_used /}/${fs_size /} ${fs_bar /}
-${color1}READ:${color4}  ${diskio_read}   
+${color2}ENTROPY:${color7} ${entropy_avail} / ${entropy_poolsize} - ${entropy_perc}% ${entropy_bar} 
+${color2}Filesystem:
+${color2}/dev/sda ${color7}${fs_used /}/${fs_size /} ${fs_bar /}
+${color2}READ:${color7}  ${diskio_read}   
 ${diskiograph_read /dev/sda 10}
-${color1}WRITE:${color4} ${diskio_write} 
+${color2}WRITE:${color7} ${diskio_write} 
 ${diskiograph_write /dev/sda 10}
-######################One day this will be formatted to look better###########
-${color1}Processes:${color4} ${processes}  ${color1}Running:${color4} ${running_processes}
-${color1}CPU Usage      	PID	CPU%   MEM%
-${color5} ${top name 1}  	${top pid 1}     ${top cpu 1}    ${top mem 1}
-${color1} ${top name 2}  	${top pid 2}	 ${top cpu 2}	 ${top mem 2}
-${color1} ${top name 3}	${top pid 3}	${top cpu 3}	${top mem 3}
-${color1}RAM Usage
-${color5} ${top_mem name 1}	${top_mem pid 1}	${top_mem cpu 1}	${top_mem mem 1}
-${color1} ${top_mem name 2}	${top_mem pid 2}	${top_mem cpu 2}	${top_mem mem 2}
-${color1} ${top_mem name 3}	${top_mem pid 3}	${top_mem cpu 3}	${top_mem mem 3}
-##############################################################################
-${color1}ESSID:${color4} ${wireless_essid wlp4s0}
-${color1}AP MAC:${color4} ${wireless_ap wlp4s0}
-#${color1}wlp3s0 MAC:${color4} ${execi 100 ifconfig | tail -n6 | grep ether | gawk '{ printf $2 }'
-${color1}AP BITRATE:${color4} ${wireless_bitrate wlp4s0}
-${color1}inet:${color4} ${addr wlp4s0}
-${color1}extIP:${color4} ${texeci 3600 curl ipinfo.io/ip}
-${color1}Signal Strength: ${color4}${wireless_link_qual_perc wlp4s0} %
+${color2}Processes:${color7} ${processes}  ${color2}Running:${color7} ${running_processes}
+${color2}CPU Usage${alignc}PID	 CPU%    MEM%
+${color5} ${top name 1}${alignc}${top pid 1}     ${top cpu 1}    ${top mem 1}
+${color2} ${top name 2}${alignc}${top pid 2}	 ${top cpu 2}	 ${top mem 2}
+${color2} ${top name 3}${alignc}${top pid 3}	 ${top cpu 3}	 ${top mem 3}
+${color2}RAM Usage
+${color5} ${top_mem name 1}${alignc}${top_mem pid 1}	${top_mem cpu 1}	${top_mem mem 1}
+${color2} ${top_mem name 2}${alignc}${top_mem pid 2}	${top_mem cpu 2}	${top_mem mem 2}
+${color2} ${top_mem name 3}${alignc}${top_mem pid 3}	${top_mem cpu 3}	${top_mem mem 3}
+${color2}ESSID:${color7} ${wireless_essid wlp4s0}
+${color2}AP MAC:${color7} ${wireless_ap wlp4s0}
+${color2}AP BITRATE:${color7} ${wireless_bitrate wlp4s0}
+${color2}inet:${color7} ${addr wlp4s0}
+${color2}extIP:${color7} ${texeci 3600 curl ipinfo.io/ip}
+${color2}Signal Strength: ${color7}${wireless_link_qual_perc wlp4s0} %
 ${color4}${wireless_link_bar wlp4s0}
 ###################################old code for download graphs through eth0##########################
 # Down:${color0} ${downspeed enp3s0f2} ${color1}${goto 215}Up:${color0} ${upspeed enp3s0f2}
 #${color6}${downspeedgraph enp3s0f2 32,175 darkolivegreen4} ${color coral3}${upspeedgraph enp3s0f2 32,175 blueviolet}
 ######################################################################################################
-${color1}Total: ${color4}${totaldown wlp4s0} ${color1}Down:${color4} ${downspeed wlp4s0}B/s ${color1}${goto 210}${color1}Total: ${color4}${totalup wlp4s0} ${color1}Up:${color4}${upspeed wlp4s0}B/s
+${color2}Total: ${color7}${totaldown wlp4s0} ${color2}Down:${color7} ${downspeed wlp4s0}B/s ${color2}${goto 210}${color2}Total: ${color7}${totalup wlp4s0} ${color2}Up:${color7}${upspeed wlp4s0}B/s
 ${color5}${downspeedgraph wlp4s0 32,175} ${color5}${upspeedgraph wlp4s0 32,175}
 ${color5}ETH:
 ${color4}${execi 600 python ~/Scripts/ETHminer.py}
 ${color5}SIA:
 ${color4}${execi 600 python ~/Scripts/SIAmine.py}
-${color5}${execi 600 packy -w 50}
+${color5}${execpi 600 packy -w 50}
