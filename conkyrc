@@ -179,14 +179,14 @@ ${color2}inet:${color7} ${addr wlp4s0}
 ${color2}extIP:${color7} ${texeci 3600 curl ipinfo.io/ip}
 ${color2}Signal Strength: ${color7}${wireless_link_qual_perc wlp4s0} %
 ${color4}${wireless_link_bar wlp4s0}
-###################################old code for download graphs through eth0##########################
+###################################old code for download graphs through eth0#########################
 # Down:${color0} ${downspeed enp3s0f2} ${color1}${goto 215}Up:${color0} ${upspeed enp3s0f2}
 #${color6}${downspeedgraph enp3s0f2 32,175 darkolivegreen4} ${color coral3}${upspeedgraph enp3s0f2 32,175 blueviolet}
 ######################################################################################################
 ${color2}Total: ${color7}${totaldown wlp4s0} ${color2}Down:${color7} ${downspeed wlp4s0}B/s ${color2}${goto 210}${color2}Total: ${color7}${totalup wlp4s0} ${color2}Up:${color7}${upspeed wlp4s0}B/s
 ${color5}${downspeedgraph wlp4s0 32,175} ${color5}${upspeedgraph wlp4s0 32,175}
-${color5}ETH:
-${color4}${execi 600 python ~/Scripts/ETHminer.py}
-${color5}SIA:
-${color4}${execi 600 python ~/Scripts/SIAmine.py}
-${color5}${execpi 600 packy -w 50}
+#${color5}ETH:
+#${color4}${execi 600 python ~/Scripts/ETHminer.py}
+#${color5}SIA:
+#${color4}${execi 600 python ~/Scripts/SIAmine.py}
+#${color5}${execpi 600 packy -w 50}
